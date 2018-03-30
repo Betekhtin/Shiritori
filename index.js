@@ -11,6 +11,18 @@ let PORT = 8080;
 let player_manager_service, room_manager_service;
 
 io.on('connection', function (socket) {
+    
+    //PLAYER JOINS ROOM
+    socket.on('subscribe', function (data) {
+        console.log(data.player.name + ' joins the room \'' + data.room + '\'');
+        socket.join(data.room);
+    });
+
+    //PLAYER LEAVES ROOM
+    socket.on('unsubscribe', function (data) {
+        console.log(data.player.name + ' leaves the room \'' + data.room + '\'');
+        socket.leave(data.room);
+    });
 
     //ADD PLAYER SERVICE CONNECTION
     socket.on('player_manager_service', function () {
@@ -60,36 +72,32 @@ io.on('connection', function (socket) {
         console.log('Rooms requested by ' + data.name + ' (' + data.id + ')');
         room_manager_service.emit('request_rooms', data);
     });
-    
+
     //SENDING ROOMS
-    socket.on('rooms', function(data){
+    socket.on('rooms', function (data) {
         console.log('Sending rooms to ' + data.name + ' (' + data.id + ')');
         io.to(data.id).emit('rooms', data.rooms);
     });
 
-})
+    //CREATE ROOM REQUEST
+    socket.on('create_room', function (data) {
+        console.log('Room creating request from ' + data.name + ' (' + data.id + ')');
+        room_manager_service.emit('create_room', data);
+    });
+
+    //ROOM NAME TAKEN
+    socket.on('room_name_taken', function (data) {
+        console.log('Room name taken: ' + data.name);
+        io.to(data.host.id).emit('room_name_taken', data);
+    });
+
+});
 
 
 //ROUTING AND STUFF
 app.set('port', PORT);
 
-app.get('/', function (request, response) {
-    response.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.get('/about.html', function (request, response) {
-    response.sendFile(path.join(__dirname, 'public', 'about.html'));
-});
-
-app.use('/scripts', express.static(__dirname + '/public/scripts'));
-
-app.use('/game', bodyParser.urlencoded({
-    extended: true
-}));
-
-app.post('/game', function (request, response, next) {
-    response.sendFile(path.join(__dirname, 'public', 'game.html'));
-});
+app.use(express.static(__dirname + '/public'));
 
 server.listen(PORT, function () {
     console.log('Starting server on port ' + PORT);

@@ -7,48 +7,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" type="text/css" href="/styles/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-        #loading {
-            display: none;
-        }
-        
-        button:focus {
-            outline: 0;
-        }
-        
-        .navbar .dropdown-menu .form-control {
-            width: 200px;
-        }
-        
-        .navbar {
-            margin-bottom: 65px;
-        }
-        
-        .loader {
-            border: 6px solid #f3f3f3;
-            /* Light grey */
-            border-top: 6px solid #3498db;
-            /* Blue */
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 2s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" role="navigation">
         <span class="navbar-brand">しりとり</span>
         <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
             &#9776;
@@ -68,6 +33,35 @@
             </ul>
         </div>
     </nav>
+
+    <main class="center-block container" id="content">
+        <!-- Loading -->
+        <div id="loading">
+            <div class=" row align-items-center justify-content-center">
+                <div class="loader"></div>
+            </div>
+            <div class=" row align-items-center justify-content-center">
+                <p id="loading_message">Loading rooms...</p>
+            </div>
+        </div>
+        <table id="rooms" class="table table-hover table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Host</th>
+                    <th scope="col">Players</th>
+                    <th scope="col">Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="rooms_body">
+            </tbody>
+        </table>
+        <h1 id="no_rooms" class="text-center text-grey">No rooms avaliable</h1>
+        <span class="d-block btn_wrp" tabindex="-1" data-toggle="tooltip" data-placement="top" title="Enter your name before creating a room">
+            <button id="create_room" style="pointer-events: none;" class="btn btn-block btn-secondary btn-lg room_btn" data-toggle="modal" data-target="#room_creation" disabled>+ Create a room</button>
+        </span>
+    </main>
 
     <!-- Rules modal -->
     <div id="rules" class="modal fade" role="dialog">
@@ -106,17 +100,33 @@
         </div>
     </div>
 
-
-    <main class="center-block container" id="content">
-        <div id="loading">
-            <div class=" row align-items-center justify-content-center">
-                <div class="loader"></div>
-            </div>
-            <div class=" row align-items-center justify-content-center">
-                <p id="loading_message">Loading rooms...</p>
+    <!-- Room creation modal -->
+    <div id="room_creation" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create a room</h4>
+                    <button id="close_room_creation" type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body container">
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="room_name">Name</label>
+                            <input id="room_name" class="form-control" type="text" name="room_name" placeholder="Let's play しりとり!" aria-label="Room name" class="form-control mr-sm-2">
+                        </div>
+                        <div class="col">
+                            <label for="room_max_players">Max players</label>
+                            <input id="room_max_players" class="form-control" type="number" name="max_players" min="2" max="32" value="10">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="create_room_btn" type="button" class="btn btn-secondary">Create room</button>
+                </div>
             </div>
         </div>
-    </main>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
