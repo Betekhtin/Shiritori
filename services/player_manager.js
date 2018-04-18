@@ -45,6 +45,7 @@ socket.on('connect', function () {
         });
         let index = players.findIndex(x => x.id == data.id);
         players.splice(index, 1);
+        console.log("Player removed: (" + data.id + ', ' + data.name + ")");
         console.log('Players:', players.map(x => x.name));
 
     })

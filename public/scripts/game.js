@@ -34,20 +34,20 @@ $('#send_name').on('click', function () {
         name: name,
         room: undefined
     }
-    popover_disable();
+    popover_disable('#name');
     socket.emit('add_player', player)
 })
 socket.on('player_name_invalid', function (data) {
     stop_button_loading('#send_name', 'Enter');
     $('#send_name').attr('disabled', false);
-    popover_message('Invalid name', 'The name you chose is invalid. Only english letters, digits and japanese characters are allowed. Please, try using another name.');
+    popover_message('#name', 'Invalid name', 'The name you chose is invalid. Only english letters, digits and japanese characters are allowed. Please, try using another name.');
     console.log('Player name invalid');
 });
 
 socket.on('player_already_exists', function (data) {
     stop_button_loading('#send_name', 'Enter');
     $('#send_name').attr('disabled', false);
-    popover_message('Name already taken', 'This name was already taken by another player in the current session. Please, try using another name.')
+    popover_message('#name', 'Name already taken', 'This name was already taken by another player in the current session. Please, try using another name.')
     console.log('Player already exists');
 });
 
@@ -58,7 +58,7 @@ socket.on('player_added', function (data) {
     username = data.name;
     $('#name_input').html('<span class="navbar-brand">こんにちは、' + player.name + '</span>');
     console.log('Player added');
-    popover_disable();
+    popover_disable('#name');
 })
 
 // DISCONNECT
@@ -112,7 +112,7 @@ function update_rooms(data) {
 // CREATING A ROOM
 $('#create_room_btn').on('click', function () {
     button_loading('#create_room_btn', 'Loading');
-    $('#close_room_creation').attr('disable', true);
+    $('#close_room_creation').attr('disabled', true);
     socket.emit('create_room', {
         name: $('#room_name').val(),
         host: {
@@ -129,7 +129,8 @@ $('#create_room_btn').on('click', function () {
 
 socket.on('room_name_taken', function (data) {
     console.log('Room name taken');
-    $('#close_room_creation').attr('disable', false);
+    popover_message('#room_name', 'Room name taken', 'A room with this name already exists. Plese, choose another name.');
+    $('#close_room_creation').attr('disabled', false);
     stop_button_loading('#create_room_btn', 'Create room');
 });
 
@@ -152,15 +153,15 @@ function stop_button_loading(selector, message) {
     $(selector).html(message);
 }
 
-function popover_message(title, message) {
-    let pop = $('#name');
+function popover_message(selector, title, message) {
+    let pop = $(selector);
     pop.attr('title', title);
     pop.attr('data-content', message);
     pop.popover('show');
 };
 
-function popover_disable() {
-    let pop = $('#name');
+function popover_disable(selector) {
+    let pop = $(selector);
     pop.popover('dispose');
 }
 

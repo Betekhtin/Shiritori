@@ -55,12 +55,9 @@ io.on('connection', function (socket) {
     socket.on('player_disconnect', function (data) {
         console.log("Player disconnected: (" + data.id + ', ' + data.name + ")");
         player_manager_service.emit('player_disconnect', data);
-    });
-
-    socket.on('player_disconnected', function (data) {
         console.log("Player removed: (" + data.id + ', ' + data.name + ")");
     });
-
+    
     //ROOM MANAGER SERVICE CONNECTION
     socket.on('room_manager_service', function () {
         console.log('Room manager service connected:', socket.id);
@@ -81,7 +78,7 @@ io.on('connection', function (socket) {
 
     //CREATE ROOM REQUEST
     socket.on('create_room', function (data) {
-        console.log('Room creating request from ' + data.name + ' (' + data.id + ')');
+        console.log('Room creating request from ' + data.host.name + ' (' + data.host.id + ')');
         room_manager_service.emit('create_room', data);
     });
 
@@ -89,6 +86,11 @@ io.on('connection', function (socket) {
     socket.on('room_name_taken', function (data) {
         console.log('Room name taken: ' + data.name);
         io.to(data.host.id).emit('room_name_taken', data);
+    });
+    
+    socket.on('room_created', function (data) {
+        console.log('Room ' + data.name + ' created by ' + data.host.name + '(' + data.host.id + ')');
+        io.to(data.host.id).emit('room_created', data);
     });
 
 });
