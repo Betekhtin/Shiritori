@@ -361,28 +361,6 @@ socket.on('game_over', function (data) {
     <h6 class="text-grey text-center my-auto">${getGameOverMessage(data)}</h3>
     <h6 class="text-grey text-center my-auto">You will be returned to the lobby in 5 seconds</h3>
  `)
-  socket.emit('subscribe', {
-    player: player,
-    room: 'lobby'
-  })
-  socket.emit('unsubscribe', {
-    player: player,
-    room: player.room
-  })
-  player.room = undefined
-  player.isHost = undefined
-  room = {
-    room: undefined,
-    host: undefined,
-    players: [],
-    status: undefined
-  }
-  game = {
-    current_player: undefined,
-    current_word: undefined,
-    word_info: undefined,
-    used_words: []
-  }
   setTimeout(() => {
     location.reload()
   }, 5000)
