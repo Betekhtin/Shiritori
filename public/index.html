@@ -2,136 +2,136 @@
 <html lang="en">
 
 <head>
-    <title>しりとり</title>
+  <title>しりとり</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="/styles/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" role="navigation">
-        <span class="navbar-brand">しりとり</span>
-        <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" role="navigation">
+    <span class="navbar-brand">しりとり</span>
+    <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
             &#9776;
         </button>
-        <div class="collapse navbar-collapse" id="exCollapsingNavbar">
-            <ul id="navigation" class="nav navbar-nav">
-                <li class="nav-link btn btn-sm" data-toggle="modal" data-target="#rules">Rules</li>
-                <li class="nav-link btn btn-sm" data-toggle="modal" data-target="#about">About</li>
-            </ul>
-            <ul id="name_input" class="nav navbar-nav flex-row justify-content-between ml-auto">
-                <li class="order-1">
-                    <ul id="name_form" class="form-inline my-2 my-lg-0" method="">
-                        <input id="name" type="text" name="nickname" placeholder="Your name" aria-label="Nickname" class="form-control mr-sm-2" data-placement="bottom" data-toggle="popover" title="" data-content="">
-                        <button id="send_name" class="btn btn-outline-success my-2 my-sm-0">Enter</button>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="exCollapsingNavbar">
+      <ul id="navigation" class="nav navbar-nav">
+        <li class="nav-link btn btn-sm" data-toggle="modal" data-target="#rules">Rules</li>
+        <li class="nav-link btn btn-sm" data-toggle="modal" data-target="#about">About</li>
+      </ul>
+      <ul id="name_input" class="nav navbar-nav flex-row justify-content-between ml-auto">
+        <li class="order-1">
+          <ul id="name_form" class="form-inline my-2 my-lg-0" method="">
+            <input id="name" type="text" name="nickname" placeholder="Your name" aria-label="Nickname" class="form-control mr-sm-2" data-placement="bottom" data-toggle="popover" title="" data-content="">
+            <button id="send_name" class="btn btn-outline-success my-2 my-lg-0">Enter</button>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-    <main class="center-block container" id="content">
-        <!-- Loading -->
-        <div id="loading">
-            <div class=" row align-items-center justify-content-center">
-                <div class="loader"></div>
-            </div>
-            <div class=" row align-items-center justify-content-center">
-                <p id="loading_message">Loading rooms...</p>
-            </div>
-        </div>
-        <table id="rooms" class="table table-hover table-sm">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Host</th>
-                    <th scope="col">Players</th>
-                    <th scope="col">Status</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="rooms_body">
-            </tbody>
-        </table>
-        <h1 id="no_rooms" class="text-center text-grey">No rooms avaliable</h1>
-        <span class="d-block btn_wrp" tabindex="-1" data-toggle="tooltip" data-placement="top" title="Enter your name before creating a room">
+  <main class="center-block container" id="content">
+    <!-- Loading -->
+    <div id="loading">
+      <div class="row align-items-center justify-content-center">
+        <div class="loader"></div>
+      </div>
+      <div class="row align-items-center justify-content-center">
+        <p id="loading_message">Loading rooms...</p>
+      </div>
+    </div>
+    <table id="rooms" class="table table-hover table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Host</th>
+          <th scope="col">Players</th>
+          <th scope="col">Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="rooms_body">
+      </tbody>
+    </table>
+    <h1 id="no_rooms" class="text-center text-grey">No rooms avaliable</h1>
+    <span id="create_room_wrap" class="d-block btn_wrp" tabindex="-1" data-toggle="tooltip" data-placement="top" title="Enter your name before creating a room">
             <button id="create_room" style="pointer-events: none;" class="btn btn-block btn-secondary btn-lg room_btn" data-toggle="modal" data-target="#room_creation" disabled>+ Create a room</button>
         </span>
-    </main>
+  </main>
 
-    <!-- Rules modal -->
-    <div id="rules" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Rules</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body container">
-                    <dl>
-                        <dd>- Words may not be repeated</dd>
-                        <dd>- Only nouns are permitted</dd>
-                        <dd>- If a word ends with small or long vowel, the next word will start with the previous kana</dd>
-                        <dd>- A player who plays a word ending in the mora ん loses the game, as no Japanese word begins with that character</dd>
-                    </dl>
-                </div>
-            </div>
+  <!-- Rules modal -->
+  <div id="rules" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Rules</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-    </div>
-
-    <!-- About modal -->
-    <div id="about" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">About</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body container">
-                    <p>Shiritori (しりとり) is a Japanese word game in which the players are required to say a word which begins with the final kana of the previous word.</p>
-                    <p>Github - <a href="https://github.com/Betekhtin/Shiritori">Betekhtin/Shiritori</a></p>
-                    <p>Wiki - <a href="https://en.wikipedia.org/wiki/Shiritori">Wikipedia/Shiritori</a></p>
-                </div>
-            </div>
+        <div class="modal-body container">
+          <dl>
+            <dd>1) Words may not be repeated</dd>
+            <dd>2) Only nouns are permitted</dd>
+            <dd>3) If a word ends with small or long vowel, the next word will start with the previous kana. In that case make sure that the penultimate kana of your word is not ん(see rule #4)</dd>
+            <dd>4) A player who plays a word ending in the mora ん loses the game, as no Japanese word begins with that character</dd>
+          </dl>
         </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Room creation modal -->
-    <div id="room_creation" class="modal fade" role="dialog" data-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Create a room</h4>
-                    <button id="close_room_creation" type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body container">
-                    <div class="form-row">
-                        <div class="col">
-                            <label for="room_name">Name</label>
-                            <input id="room_name" class="form-control" type="text" name="room_name" placeholder="Let's play しりとり!" aria-label="Room name" class="form-control mr-sm-2" data-placement="bottom" data-toggle="popover" title="" data-content="">
-                        </div>
-                        <div class="col">
-                            <label for="room_max_players">Max players</label>
-                            <input id="room_max_players" class="form-control" type="number" name="max_players" min="2" max="32" value="10">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="create_room_btn" type="button" class="btn btn-secondary">Create room</button>
-                </div>
-            </div>
+  <!-- About modal -->
+  <div id="about" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">About</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
+        <div class="modal-body container">
+          <p>Shiritori (しりとり) is a Japanese word game in which the players are required to say a word which begins with the final kana of the previous word.</p>
+          <p>Github - <a href="https://github.com/Betekhtin/Shiritori">Betekhtin/Shiritori</a></p>
+          <p>Wiki - <a href="https://en.wikipedia.org/wiki/Shiritori">Wikipedia/Shiritori</a></p>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/scripts/game.js"></script>
+  <!-- Room creation modal -->
+  <div id="room_creation" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Create a room</h4>
+          <button id="close_room_creation" type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body container">
+          <div class="form-row">
+            <div class="col">
+              <label for="room_name">Name</label>
+              <input id="room_name" class="form-control" type="text" name="room_name" placeholder="Let's play しりとり!" aria-label="Room name" class="form-control mr-sm-2" data-placement="bottom" data-toggle="popover" title="" data-content="">
+            </div>
+            <div class="col">
+              <label for="room_max_players">Max players</label>
+              <input id="room_max_players" class="form-control" type="number" name="max_players" min="2" max="32" value="10">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="create_room_btn" type="button" class="btn btn-secondary">Create room</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/scripts/game_obf.js"></script>
 </body>
 
 </html>

@@ -59,3 +59,6 @@ typings/
 
 # urls
 urls.json
+
+# util
+util.js

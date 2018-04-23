@@ -1,15 +1,22 @@
+body,
+#content,
+#game {
+  min-height: 800px;
+}
+
 #loading,
 #no_rooms,
 #rooms {
     display: none;
 }
 
-#chat {
-    min-height: 50%;
+#sidebar {
+    padding-right: 10px;
+    border-right: 1px solid #8A9DA0;
 }
 
-#no_rooms {
-    color: #8A9DA0;
+#game_field {
+    margin-top: 10%
 }
 
 #create_room {
@@ -20,12 +27,21 @@
     margin-top: 130px;
 }
 
+#word_send_container {
+    margin-top: 30px;
+}
+
 .waiting {
     color: #28A745;
 }
 
+.last_kana,
 .in_game {
     color: #DC3545;
+}
+
+.text-grey {
+    color: #8A9DA0;
 }
 
 .navbar .dropdown-menu .form-control {
