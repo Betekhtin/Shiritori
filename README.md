@@ -32,4 +32,8 @@ localhost:8080
 To start playing you need to enter your name in the top right corner and then join on of the existing rooms or create a new one.
 After joining the game wait for host to start the game or start it yourself if you are the host.
 Wait for your turn to type in a word according to the rules of shiritori (if you don't know the rules, click the "Rules" button in the top left corner)
+
+Example:
+![Live example](https://raw.githubusercontent.com/Betekhtin/Shiritori/master/usecase.gif 'Live example')
+
 #### Enjoy the game!
